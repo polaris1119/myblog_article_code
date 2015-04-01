@@ -109,9 +109,9 @@ func ZeroPadding(ciphertext []byte, blockSize int) []byte {
 }
 
 func ZeroUnPadding(origData []byte) []byte {
-	length := len(origData)
-	unpadding := int(origData[length-1])
-	return origData[:(length - unpadding)]
+	return bytes.TrimRightFunc(origData, func(r rune) bool{
+		return r == rune(0)
+	})
 }
 
 func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
