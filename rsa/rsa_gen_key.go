@@ -34,6 +34,8 @@ func GenRsaKey(bits int) error {
 	if err != nil {
 		return err
 	}
+	defer file.Close()
+	
 	err = pem.Encode(file, block)
 	if err != nil {
 		return err
