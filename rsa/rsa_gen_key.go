@@ -30,13 +30,13 @@ func GenRsaKey(bits int) error {
 		Type:  "RSA PRIVATE KEY",
 		Bytes: derStream,
 	}
-	file, err := os.Create("private.pem")
+	privFile, err := os.Create("private.pem")
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer privFile.Close()
 	
-	err = pem.Encode(file, block)
+	err = pem.Encode(privFile, block)
 	if err != nil {
 		return err
 	}
@@ -50,11 +50,12 @@ func GenRsaKey(bits int) error {
 		Type:  "PUBLIC KEY",
 		Bytes: derPkix,
 	}
-	file, err = os.Create("public.pem")
+	pubFile, err := os.Create("public.pem")
 	if err != nil {
 		return err
 	}
-	err = pem.Encode(file, block)
+	defer pubFile.Close()
+	err = pem.Encode(pubFile, block)
 	if err != nil {
 		return err
 	}
